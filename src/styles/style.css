@@ -1,10 +1,121 @@
 * {
     box-sizing: border-box;
+}
+
+body {
     font-family: 'Roboto', sans-serif;
 }
 
-h1 {
+.tela-inteira {
+    margin: 0 auto;
+    width: 55vw;
+}
+
+.tela-superior {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 10px;
+}
+
+.escolher-palavra {
+    width: 200px;
+    height: 60px;
+    background-color: #27AE60;
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    margin-top: 45px;
+    cursor: pointer;
+}
+
+.alinhado-direita {
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.palavra-vazia {
+    display: flex;
+    gap: 12px;
+}
+
+.underline {
     font-size: 50px;
     font-weight: bold;
+}
+
+.red {
     color: red;
+}
+
+.green {
+    color: green;
+}
+
+.botoes-letras {
+    margin: 0 auto;
+    width: 85%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 40px;
+}
+
+.letra {
+    width: 56px;
+    height: 56px;
+    font-size: 17px;
+    background-color: #C6DDF2;
+    color: #727272;
+    font-weight: 900;
+    border: none;
+    border: solid 1px #727272;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+.letra-clicada {
+    width: 56px;
+    height: 56px;
+    font-size: 17px;
+    background-color: #8EA4BC;
+    color: #727272;
+    font-weight: 900;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+.chutar-palavra {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    gap: 10px;
+}
+
+.chutar-palavra input {
+    height: 30px;
+}
+
+.chutar-palavra button {
+    width: 100px;
+    height: 30px;
+    background-color: #E1ECF4;
+    border: solid 1px #276FA5;
+    color: #276FA5;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
 }
