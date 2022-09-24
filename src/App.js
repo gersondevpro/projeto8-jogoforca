@@ -82,7 +82,7 @@ export default function App() {
             }
 
         } else {
-            if(desabilitados === true) {
+            if (desabilitados === true) {
                 alert("Clique em 'Escolher Palavra' para iniciar o jogo!")
             } else {
                 alert("Você já escolheu essa letra")
@@ -92,21 +92,19 @@ export default function App() {
 
     function chutar() {
         if (palpite === palavraEscolhida) {
-            setEspacos(palavraEscolhida)
             setFimDeJogo(true)
-            setPalpite("")
-            setLetraClicada("desativado")
             setDesabilitados(true)
+            setEspacos(palavraEscolhida)
             alert("Na mosca! Partiu mais uma palavra?")
         } else {
             setChances(imagens[6])
             setFimDeJogo(false)
-            setPalpite("")
-            setLetraClicada("desativado")
             setDesabilitados(true)
             setEspacos(palavraEscolhida)
             alert("Hmmmm, não chutou legal! Bora pra próxima!")
         }
+        setLetraClicada("desativado")
+        setPalpite("")
     }
 
     const letras = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", , "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
@@ -137,7 +135,7 @@ export default function App() {
                     data-identifier="type-guess"
                     onChange={evt => setPalpite(evt.target.value)}
                     value={palpite}></input>
-                <button data-identifier="guess-button" onClick={chutar}>Chutar</button>
+                <button disabled={desabilitados} data-identifier="guess-button" onClick={chutar}>Chutar</button>
             </div>
         </>
     )
