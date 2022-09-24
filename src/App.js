@@ -24,17 +24,18 @@ export default function App() {
     const [desabilitados, setDesabilitados] = useState(true)
     const [palavraEscolhida, setPalavraEscolhida] = useState([])
     const [espacos, setEspacos] = useState("")
-    const [letraClicada, setLetraClicada] = useState([])
+    const [letraClicada, setLetraClicada] = useState(["desativado"])
     const [chances, setChances] = useState(imagens[0])
     const [fimDeJogo, setFimDeJogo] = useState("")
     const [palpite, setPalpite] = useState("")
 
     function iniciarJogo() {
         setDesabilitados(desabilitados === true ? false : false)
+        setLetraClicada([])
 
         const palavra = Math.floor(Math.random() * palavras.length)
         const novaPalavra = (palavras[palavra]);
-        
+
         setPalavraEscolhida(novaPalavra)
         console.log(novaPalavra)
 
@@ -43,11 +44,13 @@ export default function App() {
             numEspacos.push("_ ")
         }
         setEspacos([...numEspacos])
+        setChances(imagens[0])
+        setFimDeJogo("")
     }
 
     function escolherLetra(letra) {
 
-        if (desabilitados === false) {
+        if (desabilitados === false && letraClicada.includes(letra) !== true) {
             setLetraClicada([...letraClicada, letra])
 
             let semAcento = palavraEscolhida.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
@@ -57,6 +60,9 @@ export default function App() {
                         espacos[i] = palavraEscolhida[i]
                         if (!espacos.includes("_ ")) {
                             setFimDeJogo(true)
+                            setLetraClicada("desativado")
+                            setDesabilitados(true)
+                            alert("Você venceu a forca! Parabéns!")
                         }
                     }
                 }
@@ -65,14 +71,22 @@ export default function App() {
                     if (imagens[p] === chances) {
                         setChances(imagens[p + 1])
                         if (!imagens[p + 2]) {
+                            setEspacos(palavraEscolhida)
                             setFimDeJogo(false)
+                            setLetraClicada("desativado")
+                            setDesabilitados(true)
+                            alert("Infelizmente não foi dessa vez! Não desista!")
                         }
                     }
                 }
             }
 
         } else {
-            alert("Clique em 'Escolher Palavra' para iniciar o jogo!")
+            if(desabilitados === true) {
+                alert("Clique em 'Escolher Palavra' para iniciar o jogo!")
+            } else {
+                alert("Você já escolheu essa letra")
+            }
         }
     }
 
@@ -81,10 +95,17 @@ export default function App() {
             setEspacos(palavraEscolhida)
             setFimDeJogo(true)
             setPalpite("")
+            setLetraClicada("desativado")
+            setDesabilitados(true)
+            alert("Na mosca! Partiu mais uma palavra?")
         } else {
             setChances(imagens[6])
             setFimDeJogo(false)
             setPalpite("")
+            setLetraClicada("desativado")
+            setDesabilitados(true)
+            setEspacos(palavraEscolhida)
+            alert("Hmmmm, não chutou legal! Bora pra próxima!")
         }
     }
 
@@ -94,28 +115,29 @@ export default function App() {
         <>
             <div className="tela-inteira">
                 <div className="tela-superior">
-                    <img src={chances} alt="Imagem da forca" />
+                    <img data-identifier="game-image" src={chances} alt="Imagem da forca" />
                     <div className="alinhado-direita">
-                        <button className="escolher-palavra" onClick={iniciarJogo}>Escolher Palavra</button>
+                        <button data-identifier="choose-word" className="escolher-palavra" onClick={iniciarJogo}>Escolher Palavra</button>
                         <div className="palavra-vazia">
-                            <p className={fimDeJogo === "" ? "underline" : fimDeJogo === true ? "underline green" : "underline red"}>{espacos}</p>
+                            <p data-identifier="word" className={fimDeJogo === "" ? "underline" : fimDeJogo === true ? "underline green" : "underline red"}>{espacos}</p>
                         </div>
                     </div>
                 </div>
                 <div className={"botoes-letras"}>
                     {letras.map((l) =>
                         <button onClick={() => escolherLetra(l)}
-                            className={letraClicada.includes(l) ? "letra-clicada" : "letra"}>
-                            <p disabled={desabilitados}><ImprimirBotoesLetras letra={l.toUpperCase()} /></p>
+                            className={letraClicada.includes("desativado") ? "letra-clicada" : letraClicada.includes(l) ? "letra-clicada" : "letra"}>
+                            <p data-identifier="letter" disabled={desabilitados} ><ImprimirBotoesLetras letra={l.toUpperCase()} /></p>
                         </button>)}
                 </div>
             </div>
             <div className="chutar-palavra">
                 <p>Já sei a palavra!</p>
                 <input disabled={desabilitados}
+                    data-identifier="type-guess"
                     onChange={evt => setPalpite(evt.target.value)}
                     value={palpite}></input>
-                <button onClick={chutar}>Chutar</button>
+                <button data-identifier="guess-button" onClick={chutar}>Chutar</button>
             </div>
         </>
     )
